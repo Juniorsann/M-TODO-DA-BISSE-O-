@@ -9,19 +9,24 @@ def bissecao(f, a, b, tol):
         c = (a + b) / 2.0  
         if f(c) == 0: 
             return c, iteracoes
-        elif f(a) * f(c) < 0:
+        elif f(Xmin) * f(c) < 0 and f(Xmax) * f(c) > 0: 
             b = c 
+        elif f(Xmin) * f(c) > 0 and f(Xmax) * f(c) < 0:
+            a = c
+        elif f(Xmin) * f(c) < 0 and f(Xmax) * f(c) > 0: 
+            a = c
         else:
-            a = c  
+            print ("Não existe solução")
+          
 
     return (a + b) / 2.0, iteracoes
 def funcao(x):
     return x**3 - x - 2
 
-a = 1
-b = 2
-tolerancia = 1e-5
-raiz, iteracoes = bissecao(funcao, a, b, tolerancia)
+Xmin = 2
+Xmax = -3
+tol = 1e-5
+raiz, iteracoes = bissecao(funcao, a, b, tol)
 
 print(f"A raiz aproximada é: {raiz}")
 print(f"Número de iterações: {iteracoes}")
