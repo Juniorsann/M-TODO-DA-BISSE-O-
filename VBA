@@ -1,0 +1,62 @@
+Sub Meio_Intervalo()
+
+' declarando as variáveis
+
+ dim i, Nit, As Integer
+ Dim Xmin, Xmax, Xm, tol, fmin, fmax, fm As Double
+ 
+' Lendo as informações a partir da planilha
+ Xmin = Cells(1, 2).Value
+ Xmax = Cells(2, 2).Value
+ Nit = Cells(3, 2).Value
+ tol = Cells(4.2).Value
+ 
+' Testando se Xmin ou Xmax é solução
+ Cells(6, 2).Value = Xmin
+ fmin = Cells(7, 2).Value
+ If Abs(fmin) <= tol Then
+    MsgBox ("A solução é o Xmin = " & Str(Xmin))
+    End
+ End If
+ 
+ Cells(6, 2).Value = Xmax
+ fmin = Cells(7, 2).Value
+ If Abs(fmin) <= tol Then
+    MsgBox ("A solução é o Xmax = " & Str(Xmin))
+    End
+ End If
+ 
+ ' loop de cálculo
+ 
+  For i = 1 To Nit Step 1
+    Xm = (Xmin + Xmax) / 2
+    Cells(6, 2).Value = Xm
+    fm = Cells(7, 2).Value
+    If Abs(fm) <= tol Then
+        MsgBox ("a solução é: " & Str(Xm) & "Obtidana na iteração " & Str(i))
+        End
+    Else
+        If fmin * fm < 0 And fm * fmax > 0 Then
+            Xmax = Xm
+            fmax = fm
+        End If
+        If fmin * fm > 0 And fm * fmax < 0 Then
+            Xmin = Xm
+            fmax = fm
+        End If
+        If fmin * fm < 0 And fm * fmax < 0 Then
+            Xmin = Xm
+            fmax = fm
+        End If
+        If fmin * fm > 0 And fm * fmax > 0 Then
+            MsgBox ("Pode não haver solução no intervalo dado")
+            End
+        End If
+    End If
+Next
+
+' Mensagem final
+
+ MsgBox ("Todas as iterações foram rodadas e nenhuma solução encontrada. Tente um novo intervalo de busca")
+ 
+End Sub
