@@ -1,0 +1,51 @@
+def metodo_das_cordas(f, a, b, tol):
+    """
+    Implementa o método das cordas (posição falsa) para encontrar a raiz de uma função f em [a, b].
+    
+    Parâmetros:
+    f   - Função contínua na qual se deseja encontrar a raiz.
+    a   - Limite inferior do intervalo.
+    b   - Limite superior do intervalo.
+    tol - Tolerância para o erro (critério de parada).
+    
+    Retorna:
+    A aproximação da raiz da função f.
+    """
+    
+    if f(a) * f(b) >= 0:
+        print("A função não muda de sinal no intervalo dado.")
+        return None
+
+    # Inicializa variáveis
+    iter_count = 0
+    max_iter = 1000  # Limite de iterações para evitar loops infinitos
+
+    while abs(b - a) > tol:
+        # Calcula o ponto da interseção da corda (posição falsa)
+        c = b - (f(b) * (b - a)) / (f(b) - f(a))
+        
+        if f(c) == 0:
+            return c  # Encontrou a raiz exata
+        elif f(a) * f(c) < 0:
+            b = c
+        else:
+            a = c
+
+        iter_count += 1
+        if iter_count > max_iter:
+            print("Número máximo de iterações atingido.")
+            break
+
+    return c
+
+# Exemplo de uso
+def funcao_exemplo(x):
+    return x**3 - 4*x - 9  # Exemplo de função
+
+# Intervalo [a, b] onde a função muda de sinal
+a = 2
+b = 3
+tolerancia = 1e-6  # Precisão desejada
+
+raiz = metodo_das_cordas(funcao_exemplo, a, b, tolerancia)
+print(f"A raiz aproximada é: {raiz}")
