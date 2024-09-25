@@ -1,0 +1,45 @@
+def newton_raphson(f, df, x0, tol):
+    """
+    Implementa o método de Newton-Raphson para encontrar a raiz de uma função f.
+    
+    Parâmetros:
+    f   - Função na qual se deseja encontrar a raiz.
+    df  - Derivada da função f.
+    x0  - Aproximação inicial.
+    tol - Tolerância para o erro (critério de parada).
+    
+    Retorna:
+    A aproximação da raiz da função f.
+    """
+    
+    iter_count = 0
+    max_iter = 1000  # Limite de iterações
+
+    while abs(f(x0)) > tol:
+        try:
+            x1 = x0 - f(x0) / df(x0)  # Fórmula de Newton-Raphson
+        except ZeroDivisionError:
+            print("Erro: derivada é zero em x = ", x0)
+            return None
+        
+        x0 = x1
+        iter_count += 1
+        if iter_count > max_iter:
+            print("Número máximo de iterações atingido.")
+            break
+
+    return x0
+
+# Exemplo de uso
+def funcao_exemplo(x):
+    return x**3 - 4*x - 9  # Exemplo de função
+
+def derivada_funcao_exemplo(x):
+    return 3*x**2 - 4  # Derivada da função
+
+# Aproximação inicial
+x0 = 2
+tolerancia = 1e-6  # Precisão desejada
+
+raiz = newton_raphson(funcao_exemplo, derivada_funcao_exemplo, x0, tolerancia)
+print(f"A raiz aproximada é: {raiz}")
