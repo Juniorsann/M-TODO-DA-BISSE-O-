@@ -1,0 +1,90 @@
+Sub preencher()
+' declaração de variáveis
+    Dim i, k, N
+    
+' lendo a dimensão do sistema
+    N = Cells(1, 2).Value
+    
+' demarcando a região da matriz A
+    Cells(1, 4).Value = "Matriz A"
+    Cells(1, 4).Interior.Color = RGB(120, 170, 210)
+    For i = 2 To N + 1 Step 1
+        For j = 4 To 3 + N Step 1
+            Cells(i, j).Interior.Color = RGB(120, 170, 210)
+        Next
+    Next
+
+' demarcando a região do vetor b
+    Cells(1, 4 + N).Value = "Vetor b"
+    Cells(1, 4 + N).Interior.Color = RGB(90, 190, 140)
+    For i = 2 To N + 1 Step 1
+        Cells(i, 4 + N).Interior.Color = RGB(90, 190, 140)
+    Next
+    
+End Sub
+Sub Limpar()
+' declaração de variáveis
+    Dim i, k, N
+    
+' lendo a dimensão do sistema
+    N = Cells(1, 2).Value
+    
+' Limpando a região da matriz A
+    Cells(1, 4).Clear
+    For i = 2 To N + 1 Step 1
+        For j = 4 To 3 + N Step 1
+            Cells(i, j).Clear
+        Next
+    Next
+
+' demarcando a região do vetor b
+    Cells(1, 4 + N).Clear
+    For i = 2 To N + 1 Step 1
+        Cells(i, 4 + N).Clear
+    Next
+    
+End Sub
+Sub Identificar()
+' Declarando as variáveis
+    Dim i, j, N As Integer
+    Dim A(), b() As Double
+    Dim soma As Double
+    
+' lendo a dimensão do sistema
+    N = Cells(1, 2).Value
+    
+' dimensionamento A e B
+    ReDim A(1 To N, 1 To N), b(1 To N, 1 To 1)
+    
+' lendo a matriz A e o Vetor
+    For i = 1 To N Step 1
+        For j = 1 To N Step 1
+            A(i, j) = Cells(i + 1, 3 + j).Value
+        Next
+        b(i + 1) = Cells(i + 1, 4 + N)
+    Next
+' testando se há elemento nulo na diagonal principal
+For i = 1 To N Step 1
+    If (A(i, i) = 0) Then
+        MsgBox ("Existe elemento nulo na diagonal principal. Modifique o sistema.")
+        End
+    End If
+Next
+    
+    
+' testando se o sistema é diagonal
+    soma = 0
+    For i = 1 To N Step 1
+        For j = 1 To N Step 1
+            If (i <> j) Then
+                soma = soma + Abs(A(i, j))
+            End If
+        Next
+    Next
+    
+    If (soma = 0) Then
+        MsgBox ("O sistema é diagonal")
+    End If
+
+
+End Sub
